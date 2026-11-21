@@ -5,7 +5,7 @@
     return typeof chrome !== 'undefined' && chrome.runtime && !!chrome.runtime.id;
   }
 
-  const API_URL = 'https://ryr-titan-backend.onrender.com';
+  const API_URL = 'https://ryr-titan-backend-h2ff.onrender.com';
 
   // 0. ESCUDO CSS INMEDIATO (0ms): OCULTA LÁPICES, DRAFTS Y BOTONES DE RAYITO EN LA LISTA LATERAL
   const draftBlockerStyle = document.createElement('style');
