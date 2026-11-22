@@ -9,6 +9,13 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const { createClient } = require('@supabase/supabase-js');
+let ws;
+try {
+  ws = require('ws');
+  if (typeof globalThis.WebSocket === 'undefined') {
+    globalThis.WebSocket = ws;
+  }
+} catch (e) {}
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -16,7 +23,10 @@ const PORT = process.env.PORT || 3000;
 // CONFIGURACIÓN DE SUPABASE
 const SUPABASE_URL = process.env.SUPABASE_URL || 'https://tu-proyecto.supabase.co';
 const SUPABASE_KEY = process.env.SUPABASE_SERVICE_KEY || process.env.SUPABASE_KEY || 'tu-api-key-secreta';
-const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+const supabase = createClient(SUPABASE_URL, SUPABASE_KEY, {
+  auth: { persistSession: false },
+  realtime: ws ? { transport: ws } : {}
+});
 
 // MIDDLEWARES
 app.use(cors({
